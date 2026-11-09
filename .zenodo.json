@@ -1,0 +1,32 @@
+{
+  "title": "Vyom-205M: Official Benchmark Verification Suite & Evaluation Results",
+  "upload_type": "software",
+  "description": "Official benchmark evaluation results, reproduction harness, confusion matrices, and research preprint for Vyom-205M: A 204.96M-parameter sovereign Earth observation foundation model engineered for smallholder cadastral boundary delineation, all-weather SAR-to-optical cloud penetration, and 6-class biophysical crop stress diagnostics.",
+  "creators": [
+    {
+      "name": "Sphitih AI Research Team",
+      "affiliation": "Sphitih AI"
+    }
+  ],
+  "access_right": "open",
+  "license": "Apache-2.0",
+  "keywords": [
+    "earth observation",
+    "foundation models",
+    "smallholder agriculture",
+    "cadastral boundary delineation",
+    "synthetic aperture radar",
+    "SAR-to-optical synthesis",
+    "crop stress diagnostics",
+    "food security",
+    "Sen1Floods11",
+    "SEN12MS-CR"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/sphitih-ai/vyom-205m-benchmarks",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "sen1floods11_per_country": {
+    "Sri-Lanka": {
+      "tp": 342046,
+      "fp": 569,
+      "fn": 15328,
+      "tn": 166743
+    },
+    "Spain": {
+      "tp": 200865,
+      "fp": 6898,
+      "fn": 56348,
+      "tn": 260177
+    },
+    "India": {
+      "tp": 215723,
+      "fp": 9594,
+      "fn": 61092,
+      "tn": 1007201
+    },
+    "Mekong": {
+      "tp": 8924,
+      "fp": 0,
+      "fn": 10344,
+      "tn": 505011
+    },
+    "Somalia": {
+      "tp": 26298,
+      "fp": 2716,
+      "fn": 37068,
+      "tn": 451106
+    },
+    "Paraguay": {
+      "tp": 19627,
+      "fp": 1392,
+      "fn": 30034,
+      "tn": 1515433
+    },
+    "USA": {
+      "tp": 5075,
+      "fp": 4,
+      "fn": 8711,
+      "tn": 772719
+    },
+    "Nigeria": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2777,
+      "tn": 246995
+    },
+    "Ghana": {
+      "tp": 285,
+      "fp": 0,
+      "fn": 18396,
+      "tn": 769151
+    },
+    "Pakistan": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 2,
+      "tn": 335140
+    }
+  },
+  "head_d_confusion_matrix": [
+    [
+      133,
+      7,
+      8,
+      37,
+      0,
+      1
+    ],
+    [
+      10,
+      95,
+      0,
+      12,
+      0,
+      5
+    ],
+    [
+      22,
+      5,
+      6,
+      1,
+      0,
+      1
+    ],
+    [
+      44,
+      65,
+      1,
+      65,
+      2,
+      2
+    ],
+    [
+      0,
+      0,
+      1,
+      0,
+      13,
+      2
+    ],
+    [
+      1,
+      1,
+      0,
+      0,
+      0,
+      10
+    ]
+  ],
+  "head_d_classes": [
+    "Healthy",
+    "Moisture Deficit",
+    "Nutrient Chlorosis",
+    "Pest / Disease Defoliation",
+    "Flood / Waterlogging",
+    "Soil Salinity / Usar"
+  ],
+  "head_a_metrics": {
+    "farm_extent_iou": 0.823,
+    "farm_extent_f1": 0.9029,
+    "bund_boundary_iou": 0.113,
+    "bund_relaxed_f1_055": 0.2649,
+    "bund_relaxed_f1_045": 0.2783,
+    "bund_relaxed_f1_calibrated_core": 0.282,
+    "bund_pred_density_060": 0.0545,
+    "ground_truth_bund_density": 0.0499,
+    "watershed_parcels_per_scene": 1.04
+  },
+  "head_b_metrics": {
+    "sar2opt_ssim": 0.8924,
+    "sar2opt_mae": 0.0298,
+    "zero_shot_ssim_sen1floods11": 0.4366,
+    "zero_shot_mae_sen1floods11": 0.0643
+  }
+}

@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use Vyom-205M in your research, please cite it as below."
+authors:
+  - name: "Sphitih AI Research Team"
+    website: "https://github.com/sphitih-ai"
+title: "Vyom-205M: A Sovereign Multi-Resolution Spatio-Temporal Foundation Model for Smallholder Cadastral Delineation, SAR-to-Optical Cloud Synthesis, and Biophysical Crop Stress Diagnostics"
+version: 1.0.0
+date-released: 2026-11-09
+url: "https://github.com/sphitih-ai/vyom-205m-benchmarks"
+repository-code: "https://github.com/sphitih-ai/vyom-205m-benchmarks"
+license: "Apache-2.0"
+keywords:
+  - "earth observation"
+  - "foundation models"
+  - "smallholder agriculture"
+  - "cadastral boundary delineation"
+  - "synthetic aperture radar"
+  - "SAR-to-optical synthesis"
+  - "biophysical crop stress"
+  - "sovereign AI"
+  - "food security"
+preferred-citation:
+  type: article
+  authors:
+    - name: "Sphitih AI Research Team"
+  title: "Vyom-205M: A Sovereign Multi-Resolution Spatio-Temporal Foundation Model for Smallholder Cadastral Delineation, SAR-to-Optical Cloud Synthesis, and Biophysical Crop Stress Diagnostics"
+  journal: "arXiv preprint"
+  year: 2026
+  url: "https://github.com/sphitih-ai/vyom-205m-benchmarks"

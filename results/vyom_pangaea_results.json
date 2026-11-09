@@ -1,0 +1,89 @@
+{
+  "model": "Vyom-Unified-205M",
+  "checkpoint": "vyom_unified_best.pt",
+  "parameters": 204961564,
+  "timestamp": "2026-11-09T11:43:33Z",
+  "device": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+  "tasks": {
+    "task1_cadastral_smallholder_boundary": {
+      "dataset_name": "Krishi-DSS / LISS-4 Smallholder Cadastral Holdout",
+      "held_out_scenes": 349,
+      "metrics": {
+        "farm_extent_iou": 0.823,
+        "farm_extent_f1": 0.9029,
+        "bund_boundary_iou": 0.113,
+        "bund_relaxed_boundary_f1_2px": 0.2649,
+        "bund_relaxed_boundary_f1_2px_calibrated_045": 0.2783,
+        "watershed_parcels_per_scene": 1.04
+      }
+    },
+    "task2_sen1floods11_inundation": {
+      "dataset_name": "Sen1Floods11 Global Hand-Labeled Inundation Benchmark",
+      "total_tiles": 45,
+      "calibration_train_tiles": 15,
+      "held_out_test_tiles": 30,
+      "countries": [
+        "Ghana",
+        "India",
+        "Mekong",
+        "Nigeria",
+        "Pakistan",
+        "Paraguay",
+        "Somalia",
+        "Spain",
+        "Sri-Lanka",
+        "USA"
+      ],
+      "metrics": {
+        "cumulative_water_iou_multiscale_probe": 0.7581,
+        "cumulative_land_iou_multiscale_probe": 0.9528,
+        "cumulative_miou_multiscale_probe": 0.8554,
+        "cumulative_pixel_acc_multiscale_probe": 0.9589,
+        "cumulative_water_iou_upernet_probe": 0.4577,
+        "cumulative_land_iou_upernet_probe": 0.7691,
+        "cumulative_miou_upernet_probe": 0.6134,
+        "cumulative_pixel_acc_upernet_probe": 0.8068,
+        "zero_shot_sar2opt_ssim": 0.4366,
+        "zero_shot_sar2opt_mae": 0.0643,
+        "per_country_water_iou": {
+          "Sri-Lanka": 0.9556,
+          "Spain": 0.7605,
+          "India": 0.7532,
+          "Mekong": 0.4632,
+          "Somalia": 0.398,
+          "Paraguay": 0.3844,
+          "USA": 0.368,
+          "Nigeria": 0.3678,
+          "Ghana": 0.2427,
+          "Pakistan": 0.0
+        }
+      }
+    },
+    "task3_agrifieldnet_crop_classification": {
+      "dataset_name": "AgriFieldNet-India Multi-Temporal Agronomic Holdout",
+      "held_out_scenes": 116,
+      "held_out_parcels": 550,
+      "num_classes": 12,
+      "metrics": {
+        "linear_probe_overall_accuracy": 0.3345,
+        "linear_probe_weighted_f1": 0.2443,
+        "linear_probe_macro_f1_12class": 0.0608,
+        "linear_probe_top_class_acc_normed": 0.4,
+        "dominant_wheat_class_recall": 0.805,
+        "dominant_wheat_class_f1": 0.525,
+        "head_c_unsupervised_cluster_purity_116scenes": 0.4,
+        "head_c_unsupervised_cluster_purity_20scene_slice": 0.6,
+        "head_d_biophysical_stress_acc": 0.5855,
+        "head_d_biophysical_stress_macro_f1": 0.573
+      }
+    },
+    "task4_sar2opt_cloud_synthesis": {
+      "dataset_name": "SEN12MS-CR Benchmark Protocol / Multi-Temporal S1-to-S2 Agri-Cubes",
+      "held_out_scenes": 116,
+      "metrics": {
+        "ssim": 0.8924,
+        "mae": 0.0298
+      }
+    }
+  }
+}

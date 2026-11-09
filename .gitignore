@@ -1,0 +1,46 @@
+# Model weights (Strict IP Protection)
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.onnx
+*.safetensors
+*.joblib
+*.pkl
+
+# Secrets and environment configurations
+.env
+*.env
+*.env.*
+*.secret
+*.pem
+*.key
+
+# Python execution and cache artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
