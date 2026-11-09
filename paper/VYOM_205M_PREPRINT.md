@@ -2,7 +2,7 @@
 
 **Sphitih AI Research Team**  
 *Sphitih AI* &nbsp;|&nbsp; `contact@sphitih.com` &nbsp;|&nbsp; [https://github.com/sphitih-ai](https://github.com/sphitih-ai)  
-*November 2026*
+*November 2026* &nbsp;|&nbsp; **DOI:** [10.5281/zenodo.24078426](https://doi.org/10.5281/zenodo.24078426)
 
 ---
 

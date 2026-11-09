@@ -4,14 +4,16 @@
 [![Parameters](https://img.shields.io/badge/Parameters-204.96M-green.svg)](#subsystem-parameter-accounting)
 [![Verification](https://img.shields.io/badge/Verification-Passing-brightgreen.svg)](#reproducing-results-in-10-seconds)
 [![Organization](https://img.shields.io/badge/Organization-sphitih--ai-orange.svg)](https://github.com/sphitih-ai)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24078426.svg)](https://doi.org/10.5281/zenodo.24078426)
 [![Preprint](https://img.shields.io/badge/Preprint-PDF_Available-red.svg)](paper/VYOM_205M_PREPRINT.pdf)
 
 Official evaluation suite, publication preprint, and standalone verification harness for **Vyom-205M** (*Sovereign Multi-Task Agronomic Foundation Model*), developed by the **Sphitih AI Research Team**.
 
-📄 **Read the Research Preprint:** [`paper/VYOM_205M_PREPRINT.pdf`](paper/VYOM_205M_PREPRINT.pdf) (Compiled PDF, 15 Pages)  
+🏛️ **Zenodo Permanent Archive:** [https://doi.org/10.5281/zenodo.24078426](https://doi.org/10.5281/zenodo.24078426)  
+📄 **Read the Research Preprint:** [`paper/VYOM_205M_PREPRINT.pdf`](paper/VYOM_205M_PREPRINT.pdf) (Compiled PDF, 13 Pages)  
 📝 **Preprint Markdown Source:** [`paper/VYOM_205M_PREPRINT.md`](paper/VYOM_205M_PREPRINT.md)  
 🚀 **GitHub Organization:** [https://github.com/sphitih-ai](https://github.com/sphitih-ai)  
-🔬 **Public Repository:** [https://github.com/sphitih-ai/vyom-205m-benchmarks](https://github.com/sphitih-ai/vyom-205m-benchmarks)
+🔬 **Public Repository:** [https://github.com/sphitih-ai/sphitih-ai-vyom-205m-benchmarks-](https://github.com/sphitih-ai/sphitih-ai-vyom-205m-benchmarks-)
 
 ---
 
@@ -140,12 +142,13 @@ python verify_benchmarks.py
 If you find Vyom-205M useful in your research or applications, please cite:
 
 ```bibtex
-@article{sphitih2026vyom205m,
+@article{srivastava2026vyom205m,
   title={{Vyom-205M: A Sovereign Multi-Resolution Spatio-Temporal Foundation Model for Smallholder Cadastral Delineation, SAR-to-Optical Cloud Synthesis, and Biophysical Crop Stress Diagnostics}},
-  author={{Sphitih AI Research Team}},
-  journal={arXiv preprint},
+  author={Srivastava, Vaidic and {Sphitih AI Research Team}},
+  journal={Zenodo / arXiv preprint},
   year={2026},
-  url={https://github.com/sphitih-ai/vyom-205m-benchmarks}
+  doi={10.5281/zenodo.24078426},
+  url={https://doi.org/10.5281/zenodo.24078426}
 }
 ```
 
