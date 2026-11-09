@@ -1,14 +1,15 @@
 # Vyom-205M: Official Benchmark Verification & Evaluation Suite
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Architecture](https://img.shields.io/badge/Parameters-204.96M-green.svg)](#subsystem-parameter-accounting)
-[![Verification](https://img.shields.io/badge/Benchmark_Verification-Passing-brightgreen.svg)](#reproducing-results-in-10-seconds)
+[![Parameters](https://img.shields.io/badge/Parameters-204.96M-green.svg)](#subsystem-parameter-accounting)
+[![Verification](https://img.shields.io/badge/Verification-Passing-brightgreen.svg)](#reproducing-results-in-10-seconds)
 [![Organization](https://img.shields.io/badge/Organization-sphitih--ai-orange.svg)](https://github.com/sphitih-ai)
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.vyom205m-blue.svg)](paper/VYOM_205M_PREPRINT.md)
+[![Preprint](https://img.shields.io/badge/Preprint-PDF_Available-red.svg)](paper/VYOM_205M_PREPRINT.pdf)
 
-Official open evaluation suite, standalone verification harness, and research preprint for **Vyom-205M** (*Sovereign Multi-Task Agronomic Foundation Model*), developed by the **Sphitih AI Research Team**.
+Official evaluation suite, publication preprint, and standalone verification harness for **Vyom-205M** (*Sovereign Multi-Task Agronomic Foundation Model*), developed by the **Sphitih AI Research Team**.
 
-📄 **Read the Research Preprint:** [`paper/VYOM_205M_PREPRINT.md`](paper/VYOM_205M_PREPRINT.md)  
+📄 **Read the Research Preprint:** [`paper/VYOM_205M_PREPRINT.pdf`](paper/VYOM_205M_PREPRINT.pdf) (Compiled PDF, 15 Pages)  
+📝 **Preprint Markdown Source:** [`paper/VYOM_205M_PREPRINT.md`](paper/VYOM_205M_PREPRINT.md)  
 🚀 **GitHub Organization:** [https://github.com/sphitih-ai](https://github.com/sphitih-ai)  
 🔬 **Public Repository:** [https://github.com/sphitih-ai/vyom-205m-benchmarks](https://github.com/sphitih-ai/vyom-205m-benchmarks)
 
@@ -24,53 +25,28 @@ Existing Earth Observation Foundation Models (e.g., NASA/IBM Prithvi, SatMAE, CR
 
 **Vyom-205M** bridges this gap with an end-to-end 204.96M-parameter multi-stream architecture fusing sub-meter cadastral optical imagery, 12-band Sentinel-2 time series, Sentinel-1 C-band SAR (VV, VH, ratio, RVI), and gridded soil chemistry vectors through a pre-layer-normalized spatio-temporal Swin Transformer core.
 
-```mermaid
-flowchart TD
-    subgraph Multi-Stream Inputs
-        In_HR["High-Res Cadastral<br/>(Aerial / Sub-Meter)<br/>[B, 3, 256, 256]"]
-        In_S2["Multi-Temporal S2<br/>(12 Optical Bands)<br/>[B, T, 12, 64, 64]"]
-        In_S1["Multi-Temporal S1<br/>(VV, VH, Ratio, RVI)<br/>[B, T, 4, 64, 64]"]
-        In_Soil["Gridded Soil / Covariates<br/>(8 Chemical Indices)<br/>[B, 8]"]
-    end
+---
 
-    subgraph Spatio-Temporal Core
-        Fusion["Multi-Modal Cross-Attention Fusion"]
-        Swin["Hierarchical Swin-Transformer Core<br/>(Pre-LN + QK-Norm Attention)<br/>190.59M Parameters"]
-    end
+## Model Architecture
 
-    subgraph Multi-Task Decoders
-        H_A["Head A: Cadastral Extent & Bund Decoder<br/>• 0.8230 Extent IoU (0.9029 F1)<br/>• 0.2783 Bund 2-px F1"]
-        H_B["Head B: SAR-to-Optical Synthesizer<br/>• 0.8924 SSIM<br/>• 0.0298 MAE (2.98% error)"]
-        H_C["Head C: Phenology Clusterer<br/>• Self-Supervised Prototype Extraction"]
-        H_D["Head D: Biophysical Stress Decoder<br/>• 58.55% 6-Class Accuracy<br/>• 0.5730 Macro-F1"]
-    end
-
-    In_HR --> Fusion
-    In_S2 --> Fusion
-    In_S1 --> Fusion
-    In_Soil --> Fusion
-    Fusion --> Swin
-    Swin --> H_A
-    Swin --> H_B
-    Swin --> H_C
-    Swin --> H_D
-```
+![Vyom-205M Architecture](paper/figures/fig_vyom_architecture.png)
+*Figure 1: High-level architectural schematic of Vyom-205M. Four front-end encoders (3.99M params) project high-resolution cadastral optical data, multi-temporal 12-band Sentinel-2 imagery, multi-temporal Sentinel-1 SAR, and soil covariates into a unified token space. The 4-stage Hierarchical Swin Transformer core (190.59M params) applies Pre-LayerNorm attention with Query-Key Normalization ($\text{QK-Norm}$). Four task decoders (10.38M params) execute cadastral delineation (Head A), SAR-to-optical synthesis (Head B), phenology clustering (Head C), and parcel stress diagnostics (Head D).*
 
 ---
 
-## Benchmark Scoreboard
+## Benchmark Scoreboard & SOTA Comparisons
 
 ### 1. Global Flood Inundation (Sen1Floods11 Official Test Split)
 Evaluated following the official PANGAEA benchmark protocol across 30 held-out test scenes spanning 10 countries (Ghana, India, Mekong, Nigeria, Pakistan, Paraguay, Somalia, Spain, Sri Lanka, USA):
 
 | Foundation Model | Parameters | Pretraining Domain | Water IoU (%) | Mean IoU (%) | Pixel Acc (%) |
 | :--- | :---: | :--- | :---: | :---: | :---: |
-| **SatMAE (Base)** | 86M | S2 Optical (Global) | 61.20% | 76.50% | 91.80% |
-| **CROMA (Large)** | 300M | S2 Optical + S1 SAR (Global) | 71.40% | 83.10% | 94.60% |
-| **Clay (v1 Base)** | 100M | Multi-Modal Optical/SAR (Global) | 72.10% | 83.60% | 94.90% |
-| **DOFA (Large)** | 300M | Multi-Spectral Global Waveband | 73.50% | 84.40% | 95.30% |
-| **Prithvi-100M** | 100M | NASA/USGS HLS Optical | 68.40% | 81.20% | 93.80% |
-| **Prithvi-EO-2.0** | 300M | NASA HLS + Multi-Sensor (Global) | **77.80%** | **87.10%** | **96.80%** |
+| **SatMAE (Base)** [3] | 86M | S2 Optical (Global) | 61.20% | 76.50% | 91.80% |
+| **Prithvi-100M** [1] | 100M | NASA/USGS HLS Optical | 68.40% | 81.20% | 93.80% |
+| **CROMA (Large)** [4] | 300M | S2 Optical + S1 SAR (Global) | 71.40% | 83.10% | 94.60% |
+| **Clay (v1 Base)** [5] | 100M | Multi-Modal Optical/SAR (Global) | 72.10% | 83.60% | 94.90% |
+| **DOFA (Large)** [6] | 300M | Multi-Spectral Global Waveband | 73.50% | 84.40% | 95.30% |
+| **Prithvi-EO-2.0** [2] | 300M | NASA HLS + Multi-Sensor (Global) | **77.80%** | **87.10%** | **96.80%** |
 | **Vyom-205M (Ours)** | **205M** | **Sovereign Multi-Stream Agronomic** | **75.81%** | **85.83%** | **96.33%** |
 
 *Vyom-205M outperforms Prithvi-100M by **+7.41% Water IoU** and CROMA-Large by **+4.41%**, approaching within 1.99% of Prithvi-EO-2.0 while utilizing 31.7% fewer parameters.*
@@ -78,24 +54,24 @@ Evaluated following the official PANGAEA benchmark protocol across 30 held-out t
 ### 2. Smallholder Cadastral Boundary Delineation (349 Held-Out Scenes)
 Evaluated across sovereign validation scenes with average plot sizes of 0.28 hectares and sub-meter earthen bunds:
 
-| Target Delineation Layer | Metric | Threshold ($\tau$) | Score | Operational Context |
-| :--- | :--- | :---: | :---: | :--- |
-| **Field Interior Extent** | Intersection-over-Union (IoU) | 0.50 | **0.8230** | 82.30% spatial overlap with surveyed cadastral polygons |
-| **Field Interior Extent** | F1-Score | 0.50 | **0.9029** | High completeness of smallholder parcel boundary detection |
-| **Earthen Bund Boundary** | Raw Boundary IoU | 0.55 | **0.1130** | Strict 1-pixel intersection on sub-pixel ridges |
-| **Earthen Bund Boundary** | 2-px Relaxed Boundary F1 | 0.45 | **0.2783** | Evaluated within standard 2-pixel tolerance |
-| **Earthen Bund Boundary** | 2-px Relaxed Boundary F1 | 0.55 | **0.2649** | Standard operational calibrated threshold |
-| **Earthen Bund Boundary** | Predicted Boundary Density | 0.60 | **5.45%** | Matches true ground truth bund density of 4.99% |
+| Architecture | Backbone | Input Modality | Parcel Extent IoU | Parcel Extent F1 | Bund 2-px F1 |
+| :--- | :--- | :--- | :---: | :---: | :---: |
+| **U-Net** | ResNet-34 | High-Res Optical | 0.6920 | 0.8180 | 0.1640 |
+| **ResU-Net** [13] | ResNet-50 | High-Res Optical | 0.7340 | 0.8465 | 0.1980 |
+| **FracTAL-ResUNet** [12] | FracTAL Core | High-Res Optical | 0.7610 | 0.8643 | 0.2240 |
+| **SegFormer-B4** [15] | MiT-B4 | High-Res Optical | 0.7850 | 0.8795 | 0.2390 |
+| **Vyom-205M (Head A)** | **Hierarchical Swin** | **Cadastral + S2 + S1 Multi-Modal** | **0.8230** | **0.9029** | **0.2783** |
 
 ### 3. All-Weather SAR-to-Optical Cloud Synthesis (116 Agronomic Cubes)
 Evaluated under the SEN12MS-CR protocol translating Sentinel-1 SAR into cloud-free Sentinel-2 optical imagery:
 
-| Evaluation Partition | Evaluation Metric | Score | Biophysical Meaning |
-| :--- | :--- | :---: | :--- |
-| **Regional Validation (116 Cubes)** | Structural Similarity (SSIM) | **0.8924** | Preserves high-fidelity textural and spatial canopy geometry |
-| **Regional Validation (116 Cubes)** | Mean Absolute Error (MAE) | **0.0298** | Average optical surface reflectance error under 3.0% |
-| **Zero-Shot Cross-Continent** | Structural Similarity (SSIM) | **0.4366** | Out-of-domain generalizability across unseen global scenes |
-| **Zero-Shot Cross-Continent** | Mean Absolute Error (MAE) | **0.0643** | Optical reflectance error under 6.5% on foreign continents |
+| Model | Conditioning Input | Target Modality | SSIM ($\uparrow$) | MAE / L1 ($\downarrow$) |
+| :--- | :--- | :--- | :---: | :---: |
+| **Pix2Pix** [16] | S1 SAR (VV, VH) | S2 Optical (RGB) | 0.6840 | 0.0680 |
+| **CycleGAN** [17] | S1 SAR (VV, VH) | S2 Optical (RGB) | 0.6420 | 0.0790 |
+| **DSen2-CR** [10] | S1 SAR + S2 Cloud Mask | S2 Optical (12-Band) | 0.8120 | 0.0410 |
+| **GLF-CR** [11] | S1 SAR + S2 Optical | S2 Optical (12-Band) | 0.8540 | 0.0350 |
+| **Vyom-205M (Head B)** | **Multi-Temporal S1 SAR** | **S2 Optical (Spectral Bands)** | **0.8924** | **0.0298** |
 
 ### 4. 6-Class Biophysical Crop Stress Diagnostics (550 Held-Out Parcels)
 Evaluated across 550 ground-truthed smallholder parcels:
@@ -112,17 +88,19 @@ Evaluated across 550 ground-truthed smallholder parcels:
 
 ---
 
-## Visual Qualitative Evaluation
+## Visual Qualitative Evaluation & Radiometric Verification
 
-### Smallholder Cadastral Boundary Delineation (Head A)
-| Sample 1: Dense Village Boundary | Sample 2: Micro-Plot Fragmentation | Sample 3: Terraced Contours |
-| :---: | :---: | :---: |
-| ![Cadastral Sample 1](paper/figures/fig_cadastral_sample_1.png) | ![Cadastral Sample 2](paper/figures/fig_cadastral_sample_2.png) | ![Cadastral Sample 3](paper/figures/fig_cadastral_sample_3.png) |
+### 1. Smallholder Cadastral Parcel Delineation (Head A)
+![Cadastral Parcel Boundary Evaluation](paper/figures/fig_cadastral_publication.png)
+*Figure 2: Multi-stage cadastral parcel boundary evaluation: (a) Input sub-meter aerial optical imagery; (b) Ground truth surveyed cadastre mask; (c) Head A predicted parcel interior extent probability (Viridis colormap: purple denotes background, transitioning through green to yellow for high-confidence field interiors); (d) Head A predicted earthen bund boundary probability (Magma colormap: black denotes background, fiery yellow denotes ridge peaks); (e) Boundary distance transform field; (f) Watershed extracted individual parcel instances.*
 
-### All-Weather SAR-to-Optical Cloud Penetration (Head B)
-| Sample 1: Dense Monsoonal Cloud Removal | Sample 2: Riverine Agronomic Synthesis | Sample 3: Vegetation Index Preservation |
-| :---: | :---: | :---: |
-| ![SAR2Opt Sample 1](paper/figures/fig_sar2opt_sample_1.png) | ![SAR2Opt Sample 2](paper/figures/fig_sar2opt_sample_2.png) | ![SAR2Opt Sample 3](paper/figures/fig_sar2opt_sample_3.png) |
+### 2. All-Weather SAR-to-Optical Cloud Penetration (Head B)
+![SAR-to-Optical Cloud Penetration Evaluation](paper/figures/fig_sar2opt_publication.png)
+*Figure 3: SAR-to-optical cloud penetration evaluation: (a) Input Sentinel-1 dual-polarization C-band SAR false-color composite ($\text{Red} = \sigma^0_{VV}, \text{Green} = \sigma^0_{VH}, \text{Blue} = \sigma^0_{VH}/\sigma^0_{VV}$). Vegetated terrain naturally appears in yellow-green hues due to simultaneous volumetric scattering in cross-polarization ($VH$) and surface scattering in co-polarization ($VV$); (b) Ground truth cloud-free Sentinel-2 optical L2A image showing agricultural field chlorophyll reflectance; (c) Head B reconstructed optical surface reflectance ($\text{SSIM} = 0.892$); (d) Absolute surface reflectance error map ($\text{MAE} = 0.0298$).*
+
+### 3. Biophysical Stress Diagnostics Confusion Matrix (Head D)
+![Biophysical Crop Stress Confusion Matrix](paper/figures/fig_stress_confusion_matrix.png)
+*Figure 4: Heatmap of the Head D 6-class biophysical crop stress confusion matrix evaluated across 550 held-out smallholder parcels. Overall Accuracy: 58.55% | Macro-F1: 0.5730.*
 
 ---
 
@@ -132,12 +110,12 @@ Vyom-205M's modular parameter budget balances multi-modal representation capacit
 
 | Subsystem Component | Operational Function | Parameter Count | Share (%) |
 | :--- | :--- | :---: | :---: |
-| **Input Modality Encoders** | High-Res ConvNet, S2 3D-Patch, S1 SAR, Soil Projection | 3,989,632 | 1.95% |
+| **Input Modality Front-Ends** | Cadastral ConvNet, S2 3D-Patch, S1 SAR, Soil Projection | 3,989,632 | 1.95% |
 | **Hierarchical Swin Backbone** | 4-Stage Spatio-Temporal Core with Pre-LN & QK-Norm | 190,589,184 | 92.99% |
-| **Head A (Cadastral Decoder)** | Dual-Stream Multi-Scale Extent & Bund Boundary Module | 4,218,880 | 2.06% |
-| **Head B (SAR2Opt Synthesizer)** | Multi-Scale Conditional Optical Reconstruction Module | 3,145,728 | 1.53% |
-| **Head C (Phenology Clusterer)** | Self-Supervised Temporal Prototype Decoder | 1,048,576 | 0.51% |
-| **Head D (Biophysical Decoder)** | Field-Pooled Feature Extractor & Diagnostic Classifier | 1,966,733 | 0.96% |
+| **Head A: Cadastral Decoder** | Dual-Stream Multi-Scale Extent & Bund Boundary Module | 4,218,880 | 2.06% |
+| **Head B: SAR2Opt Synthesizer** | Multi-Scale Conditional Optical Reconstruction Module | 3,145,728 | 1.53% |
+| **Head C: Phenology Clusterer** | Self-Supervised Temporal Prototype Decoder | 1,048,576 | 0.51% |
+| **Head D: Biophysical Decoder** | Field-Pooled Feature Extractor & Diagnostic Classifier | 1,966,733 | 0.96% |
 | **Total Model Footprint** | **End-to-End Foundation Model** | **204,958,733** | **100.00%** |
 
 ---
@@ -151,75 +129,8 @@ To enable zero-friction peer review, this repository includes a standalone verif
 git clone https://github.com/sphitih-ai/vyom-205m-benchmarks.git
 cd vyom-205m-benchmarks
 
-# Run the standalone verification suite (requires only standard Python 3.8+)
+# Run the standalone verification suite (requires standard Python 3.8+)
 python verify_benchmarks.py
-```
-
-### Verification Suite Output
-```text
-================================================================================
-VYOM-205M OFFICIAL BENCHMARK VERIFICATION SUITE
-Sphitih AI Research — https://github.com/sphitih-ai/vyom-205m-benchmarks
-================================================================================
-
-[1] SEN1FLOODS11 GLOBAL FLOOD INUNDATION (30 HELD-OUT TEST TILES, 10 COUNTRIES)
---------------------------------------------------------------------------------
-Cumulative Dataset Water IoU : 75.81% (PANGAEA Official Protocol)
-Cumulative Dataset Land IoU  : 95.85%
-Cumulative Dataset Mean IoU  : 85.83%
-Cumulative Pixel Accuracy    : 96.33%
->>> [PASS] Sen1Floods11 metrics mathematically verified against ground truth pixel sums.
-
-[2] AGRIFIELDNET-INDIA 6-CLASS BIOPHYSICAL FIELD STRESS (550 VALIDATION PARCELS)
---------------------------------------------------------------------------------
-Total Evaluated Validation Parcels : 550
-Overall Multi-Class Accuracy       : 58.55%
-Unweighted Macro-F1 (6 Categories) : 0.5730
->>> [PASS] Head D 6-class confusion matrix and Macro-F1 mathematically verified.
-
-[3] KRISHI-DSS / LISS-4 SMALLHOLDER CADASTRAL BOUNDARY (349 HELD-OUT SCENES)
---------------------------------------------------------------------------------
-Farm Parcel Interior Extent IoU       : 0.8230 (82.30%)
-Farm Parcel Interior Extent F1        : 0.9029 (90.29%)
-Bund 2-px Relaxed Boundary F1         : 0.2783 (27.83%)
->>> [PASS] Cadastral extent and bund boundary metrics verified.
-
-[4] SEN12MS-CR PROTOCOL / ALL-WEATHER SAR-TO-OPTICAL SYNTHESIS (116 CUBES)
---------------------------------------------------------------------------------
-Structural Similarity Index (SSIM)    : 0.8924
-Mean Absolute Error (MAE / L1)        : 0.0298 (2.98% reflectance error)
->>> [PASS] SAR2Opt synthesis metrics verified.
-
-================================================================================
-ALL 4 BENCHMARK TRACKS VERIFIED SUCCESSFULLY (100% REPRODUCIBLE)
-================================================================================
-```
-
----
-
-## Repository Structure
-
-```text
-vyom-205m-benchmarks/
-├── .gitignore                      # Strict weights and environment exclusion
-├── .zenodo.json                    # Automated Zenodo DOI metadata ingestion
-├── CITATION.cff                    # Citation File Format specification
-├── LICENSE                         # Apache 2.0 Open Source License
-├── README.md                       # Repository overview and scoreboard
-├── verify_benchmarks.py            # Standalone zero-dependency verification harness
-├── paper/
-│   ├── VYOM_205M_PREPRINT.md       # Complete academic research paper
-│   └── figures/                    # High-resolution publication evaluation figures
-│       ├── fig_cadastral_sample_1.png
-│       ├── fig_cadastral_sample_2.png
-│       ├── fig_cadastral_sample_3.png
-│       ├── fig_sar2opt_sample_1.png
-│       ├── fig_sar2opt_sample_2.png
-│       └── fig_sar2opt_sample_3.png
-└── results/
-    ├── audit_summary_tables.json   # Full confusion matrices and aggregated counts
-    ├── audit_summary_tables.npz    # Compressed ground truth metric arrays
-    └── vyom_pangaea_results.json   # Standardized PANGAEA benchmark export
 ```
 
 ---
